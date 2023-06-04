@@ -1,4 +1,7 @@
+using KafkaFlow;
+using KafkaFlow.Serializer;
 using timelineService.Cache;
+using timelineService.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IProducer, Producer>();
+//builder.Services.AddKafka(kafka => kafka.AddCluster(cluster =>
+// {
+//     const string topicname = "timeline";
+//     Console.WriteLine("Creating TOpic"); 
+//     cluster.WithBrokers(new[] { "localhost:9092" }).CreateTopicIfNotExists(topicname,2,4)
+//         .AddProducer("pull-timeline", producer => producer.DefaultTopic(topicname)
+//             .AddMiddlewares(middlewares => middlewares.AddSerializer<JsonCoreSerializer>()));
+// }));
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     
@@ -16,6 +28,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "timeline-redis-cache";
    
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

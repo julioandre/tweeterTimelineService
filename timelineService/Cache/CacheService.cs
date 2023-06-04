@@ -16,9 +16,9 @@ public class CacheService:ICacheService
     private void ConfigureRedis() {
         _db = ConnectionHelper.Connection.GetDatabase();
     }
-    public T GetData<T>(string key)
+    public async Task<T> GetData<T>(string key)
     {
-        var value = _db.StringGet(key);
+        var value =await  _db.StringGetAsync(key);
         if (!string.IsNullOrEmpty(value)) {
             return JsonConvert.DeserializeObject <T> (value);
         }
