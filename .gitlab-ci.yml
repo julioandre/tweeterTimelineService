@@ -17,6 +17,18 @@
 # See other available tags for .NET Core: https://hub.docker.com/_/microsoft-dotnet
 # Learn more about Docker tags: https://docs.docker.com/glossary/?term=tag
 # and the Docker itself: https://opensource.com/resources/what-docker
+stages:
+  - build
+  - test 
+  - dast
+  - deploy
+  - dockerize
+  
+include:
+  - template: Security/DAST-API.gitlab-ci.yml
+
+
+  
 image: mcr.microsoft.com/dotnet/sdk:latest
 
 # ### Define variables
@@ -29,6 +41,9 @@ variables:
   # 3) A relative path to the source code from project repository root.
   # NOTE: Please edit this path so it matches the structure of your project!
   SOURCE_CODE_PATH: '*/*/'
+  DAST_API_PROFILE: Quick
+  DAST_API_OPENAPI: test-api-specification.json
+  DAST_API_TARGET_URL: http://test-deployment/
 
 # ### Define global cache rule
 #
@@ -114,7 +129,9 @@ tests:
     - 'dotnet test --no-restore'
 
 
+
 build_image:
+  stage: dockerize
   image: docker@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
   services:
     - docker:dind@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
