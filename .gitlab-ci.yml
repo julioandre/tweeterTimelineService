@@ -111,7 +111,18 @@ tests:
   # (e.g. integration tests, unit tests etc).
   script:
     - 'dotnet test --no-restore'
-
+build_image:
+  image: docker:latest
+  services:
+    - docker:latest-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+  script:
+    - docker build -t julioandre/timelineservice .
+    
+    - docker push julioandre/timelineservice
 deploy:
   stage: deploy
   script: echo "Define your deployment script!"
