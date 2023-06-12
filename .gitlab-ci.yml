@@ -111,8 +111,10 @@ tests:
   # (e.g. integration tests, unit tests etc).
   script:
     - 'dotnet test --no-restore'
+
+
 build_image:
-  image: docker:latest
+  image: docker
   services:
     - docker:dind
   variables:
