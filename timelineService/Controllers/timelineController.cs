@@ -12,16 +12,16 @@ public class timelineController:ControllerBase
 {
     private ICacheService _cacheService;
     private IProducerAccessor _producer;
-    private IProducer _producers;
-    public timelineController(ICacheService cacheService, IProducerAccessor producer,IProducer producers)
+    
+    public timelineController(ICacheService cacheService,IProducerAccessor producer)
     {
         _cacheService = cacheService;
         _producer = producer;
-        _producers = producers;
+        
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tweet>>> GetAsync(string Id)
+    public ActionResult<IEnumerable<Tweet>> GetAsync(string Id)
     {
         string topic = "timelineTopic";
         // if (!ModelState.IsValid)
@@ -35,10 +35,10 @@ public class timelineController:ControllerBase
         //     return Ok(result);
         // }
 
-        // var producer = _producer.GetProducer("timelineTopic");
-        // await producer.ProduceAsync("key",Id);
-        await _producers.GenerateTimeline("timelineTopic", Id);
-        var result =  await _cacheService.GetData<IEnumerable<Tweet>>(Id);
+        var producer = _producer.GetProducer("pull-timeline");
+        producer.ProduceAsync("key",Id);
+        //await _producers.GenerateTimeline("timelineTopic", Id);
+        var result =  _cacheService.GetData(Id);
         if (result == null)
         {
             return NotFound("Error getting timeline");
