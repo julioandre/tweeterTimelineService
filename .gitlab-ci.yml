@@ -113,18 +113,7 @@ tests:
     - 'dotnet test --no-restore'
 
 
-build_image:
-  image: docker:24.0.2
-  services:
-    - docker:24.0.2-dind
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-  before_script:
-    - docker info
-  script:
-    - docker build -t julioandre/timelineservice .
-    
-    - docker push julioandre/timelineservice
+
 deploy:
   stage: deploy
   script: echo "Define your deployment script!"
