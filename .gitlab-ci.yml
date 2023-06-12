@@ -114,9 +114,9 @@ tests:
 
 
 build_image:
-  image: docker:24.0.2
+  image: docker@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
   services:
-    - docker:24.0.2-dind
+    - docker:dind@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
