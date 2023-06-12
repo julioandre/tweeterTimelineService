@@ -10,7 +10,7 @@ public interface ICacheService
     /// <typeparam name="T"></typeparam>
     /// <param name="keyValues"></param>
     /// <returns></returns>
-    T GetData<T>(string key);
+    IEnumerable<Tweet> GetData(string key);
 
     /// <summary>
     /// Set Data with Value and Expiration Time of Key
