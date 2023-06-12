@@ -86,18 +86,18 @@ cache:
 before_script:
   - 'dotnet restore --packages $NUGET_PACKAGES_DIRECTORY'
 
-build:
-  stage: build
-  # ### Build all projects discovered from solution file.
-  #
-  # Note: this will fail if you have any projects in your solution that are not
-  # .NET Core-based projects (e.g. WCF service), which is based on .NET Framework,
-  # not .NET Core. In this scenario, you will need to build every .NET Core-based
-  # project by explicitly specifying a relative path to the directory
-  # where it is located (e.g. 'dotnet build ./src/ConsoleApp').
-  # Only one project path can be passed as a parameter to 'dotnet build' command.
-  script:
-    - 'dotnet build --no-restore'
+# build:
+#   stage: build
+#   # ### Build all projects discovered from solution file.
+#   #
+#   # Note: this will fail if you have any projects in your solution that are not
+#   # .NET Core-based projects (e.g. WCF service), which is based on .NET Framework,
+#   # not .NET Core. In this scenario, you will need to build every .NET Core-based
+#   # project by explicitly specifying a relative path to the directory
+#   # where it is located (e.g. 'dotnet build ./src/ConsoleApp').
+#   # Only one project path can be passed as a parameter to 'dotnet build' command.
+#   script:
+#     - 'dotnet build --no-restore'
 
 tests:
   stage: test
@@ -120,7 +120,7 @@ build_image:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
-    - docker login -u REGISTRY_USER -p REGISTRY_PASSWORD 
+    - docker login -u julioandre -p Ppg31ast10
   script:
     - docker build -t julioandre/timelineservice .
     
