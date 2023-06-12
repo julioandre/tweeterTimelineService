@@ -16,11 +16,13 @@ public class CacheService:ICacheService
     private void ConfigureRedis() {
         _db = ConnectionHelper.Connection.GetDatabase();
     }
-    public T GetData<T>(string key)
+    public IEnumerable<Tweet> GetData(string key)
     {
-        var value = _db.StringGet(key);
-        if (!string.IsNullOrEmpty(value)) {
-            return JsonConvert.DeserializeObject <T> (value);
+        var value = _db.ListRange(key);
+        if (value.Length>0)
+        {
+            var timeline = value.Select(r => JsonConvert.DeserializeObject<Tweet>(r));
+            return timeline;
         }
         return default;
     }
