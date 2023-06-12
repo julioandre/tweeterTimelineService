@@ -99,21 +99,10 @@ before_script:
 #   script:
 #     - 'dotnet build --no-restore'
 
-tests:
-  stage: test
-  # ### Run the tests
-  #
-  # You can either run tests for all test projects that are defined in your solution
-  # with 'dotnet test' or run tests only for specific project by specifying
-  # a relative path to the directory where it is located (e.g. 'dotnet test ./test/UnitTests').
-  #
-  # You may want to define separate testing jobs for different types of testing
-  # (e.g. integration tests, unit tests etc).
-  script:
-    - 'dotnet test --no-restore'
 
 
 build_image:
+  stage: test
   image: docker@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
   services:
     - docker:dind@sha256:c8bb6fa5388b56304dd770c4bc0478de81ce18540173b1a589178c0d31bfce90
