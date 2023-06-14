@@ -20,7 +20,7 @@ public class timelineController:ControllerBase
         
     }
 
-    [HttpGet]
+    [HttpGet("{Id}")]
     public ActionResult<IEnumerable<Tweet>> GetAsync(string Id)
     {
         string topic = "timelineTopic";
