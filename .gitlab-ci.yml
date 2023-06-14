@@ -20,12 +20,10 @@
 stages:
   - build
   - test 
-  - dast
   - deploy
   - dockerize
   
-include:
-  - template: Security/DAST-API.gitlab-ci.yml
+
 
 
   
@@ -41,9 +39,7 @@ variables:
   # 3) A relative path to the source code from project repository root.
   # NOTE: Please edit this path so it matches the structure of your project!
   SOURCE_CODE_PATH: '*/*/'
-  DAST_API_PROFILE: Quick
-  DAST_API_OPENAPI: test-api-specification.json
-  DAST_API_TARGET_URL: http://test-deployment/
+  
 
 # ### Define global cache rule
 #
